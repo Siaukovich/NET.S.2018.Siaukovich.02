@@ -28,8 +28,8 @@
             const int LENGTH = 32; // Length of bit representation of Int32.
             ThrowIfInvalidParameters(i, j, LENGTH);
 
-            char[] numberSourceBits = ToBitsArray(numberSource);
-            string numberInBits = ToBitsString(numberIn);
+            char[] numberSourceBits = ToBitsArray(numberSource, LENGTH);
+            string numberInBits = ToBitsString(numberIn, LENGTH);
 
             int copyPartLength = j - i + 1;
             int copyStartIndex = LENGTH - copyPartLength;
@@ -64,11 +64,11 @@
         /// The <see cref="char[]"/>.
         /// Number bit representation as char array.
         /// </returns>
-        private static char[] ToBitsArray(int number)
+        private static char[] ToBitsArray(int number, int length)
         {
             // ToString method doesn't return most significant zeros, 
             // so we need to add them manually with String's PadLeft method.
-            return Convert.ToString(number, 2).PadLeft(32, '0').ToCharArray();
+            return Convert.ToString(number, 2).PadLeft(length, '0').ToCharArray();
         }
 
         /// <summary>
@@ -82,7 +82,7 @@
         /// The <see cref="string"/>.
         /// Number bit representation as string.
         /// </returns>
-        private static string ToBitsString(int number) => new string(ToBitsArray(number));
+        private static string ToBitsString(int number, int length) => new string(ToBitsArray(number, length));
 
         /// <summary>
         /// Converts bit representation of number as char array to corresponding Int32 value.
