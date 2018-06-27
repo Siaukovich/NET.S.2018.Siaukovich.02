@@ -1,38 +1,29 @@
 ﻿namespace Bytes.MSTests
 {
     using System;
-
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class BytesMSTests
     {
+        public TestContext TestContext { get; set; }
+
+        [DataSource("Microsoft.VisualStudio.TestTools.DataSource.XML",
+                    "|DataDirectory|\\TestDataSource.xml",
+                    "TestCase",
+                    DataAccessMethod.Sequential)]
+        [DeploymentItem("Bytes.MSTests\\TestDataSource.xml")]
         [TestMethod]
-        public void InsertNumber_Passed8_15_3_8_Retunrs120()
+        public void InsertNumber_ValidInput_ValidResult()
         {
-            int expected = 120;
+            int expected = Convert.ToInt32(TestContext.DataRow["ExpectedResult"]);
+            int numberSource = Convert.ToInt32(TestContext.DataRow["NumberSource"]);
+            int NumberIn = Convert.ToInt32(TestContext.DataRow["NumberIn"]);
+            int i = Convert.ToInt32(TestContext.DataRow["I"]);
+            int j = Convert.ToInt32(TestContext.DataRow["J"]);
 
-            int actual = Bytes.InsertNumber(8, 15, 3, 8);
 
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void InsertNumber_Passed8_15_0_0_Returns9()
-        {
-            int expected = 9;
-
-            int actual = Bytes.InsertNumber(8, 15, 0, 0);
-
-            Assert.AreEqual(expected, actual);
-        }
-
-        [TestMethod]
-        public void InsertNumber_Passed15_15_0_0_Returns15()
-        {
-            int expected = 15;
-
-            int actual = Bytes.InsertNumber(15, 15, 0, 0);
+            int actual = Bytes.InsertNumber(numberSource, NumberIn, i, j);
 
             Assert.AreEqual(expected, actual);
         }

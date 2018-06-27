@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TestCases>
+  
+  <TestCase>
+    <NumberSource>8</NumberSource>
+    <NumberIn>15</NumberIn>
+    <I>3</I>
+    <J>8</J>
+    <ExpectedResult>120</ExpectedResult>
+  </TestCase>
+
+  <TestCase>
+    <NumberSource>8</NumberSource>
+    <NumberIn>15</NumberIn>
+    <I>0</I>
+    <J>0</J>
+    <ExpectedResult>9</ExpectedResult>
+  </TestCase>
+
+  <TestCase>
+    <NumberSource>15</NumberSource>
+    <NumberIn>15</NumberIn>
+    <I>0</I>
+    <J>0</J>
+    <ExpectedResult>15</ExpectedResult>
+  </TestCase>
+
+</TestCases>
