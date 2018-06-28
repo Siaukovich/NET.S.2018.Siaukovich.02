@@ -25,4 +25,27 @@
     <ExpectedResult>15</ExpectedResult>
   </TestCase>
 
+
+  <TestCase>
+    <NumberSource>68</NumberSource>
+    <!--0000 0000 0000 0000 0000 0000 0100 0100-->
+    <NumberIn>2222</NumberIn>
+    <!--0000 0000 0000 0000 0000 1000 1010 1110-->
+    <I>5</I>
+    <J>14</J>
+    <ExpectedResult>5572</ExpectedResult>
+    <!--0000 0000 0000 0000 0001 0101 1100 0100-->
+  </TestCase>
+
+  <TestCase>
+    <NumberSource>2222</NumberSource>
+    <!--0000 0000 0000 0000 0000 1000 1010 1110-->
+    <NumberIn>68</NumberIn>
+    <!--0000 0000 0000 0000 0000 0000 0100 0100-->
+    <I>2</I>
+    <J>5</J>
+    <ExpectedResult>2194</ExpectedResult>
+    <!--0000 0000 0000 0000 0000 1000 1001 0010-->
+  </TestCase>
+  
 </TestCases>

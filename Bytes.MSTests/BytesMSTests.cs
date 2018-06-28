@@ -3,6 +3,9 @@
     using System;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    /// <summary>
+    /// Class for testing class Bytes.
+    /// </summary>
     [TestClass]
     public class BytesMSTests
     {
@@ -16,14 +19,13 @@
         [TestMethod]
         public void InsertNumber_ValidInput_ValidResult()
         {
-            int expected = Convert.ToInt32(TestContext.DataRow["ExpectedResult"]);
-            int numberSource = Convert.ToInt32(TestContext.DataRow["NumberSource"]);
-            int NumberIn = Convert.ToInt32(TestContext.DataRow["NumberIn"]);
-            int i = Convert.ToInt32(TestContext.DataRow["I"]);
-            int j = Convert.ToInt32(TestContext.DataRow["J"]);
+            int expected = int.Parse((string)TestContext.DataRow["ExpectedResult"]);
+            int numberSource = int.Parse((string)TestContext.DataRow["NumberSource"]);
+            int numberIn = int.Parse((string)TestContext.DataRow["NumberIn"]);
+            int i = int.Parse((string)TestContext.DataRow["I"]);
+            int j = int.Parse((string)TestContext.DataRow["J"]);
 
-
-            int actual = Bytes.InsertNumber(numberSource, NumberIn, i, j);
+            int actual = Bytes.InsertNumber(numberSource, numberIn, i, j);
 
             Assert.AreEqual(expected, actual);
         }
