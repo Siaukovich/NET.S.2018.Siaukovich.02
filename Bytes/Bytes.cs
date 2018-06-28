@@ -1,6 +1,7 @@
 ﻿namespace Bytes
 {
     using System;
+    using System.Security.Cryptography.X509Certificates;
 
     public static class Bytes
     {
@@ -25,75 +26,57 @@
         /// </returns>
         public static int InsertNumber(int numberSource, int numberIn, int i, int j)
         {
-            const int LENGTH = 32; // Length of bit representation of Int32.
-            ThrowIfInvalidParameters(i, j, LENGTH);
+            ThrowForInvalidParameters(i, j);
 
-            char[] numberSourceBits = ToBitsArray(numberSource, LENGTH);
-            string numberInBits = ToBitsString(numberIn, LENGTH);
+            int shiftedIn = numberIn << i;
 
-            int copyPartLength = j - i + 1;
-            int copyStartIndex = LENGTH - copyPartLength;
-            int destinationIndex = LENGTH - 1 - j;
+            for (int k = i; k < j  + 1; ++k)
+            {
+                int mask = 1 << k;
 
-            numberInBits.CopyTo(copyStartIndex, numberSourceBits, destinationIndex, copyPartLength);
-
-            return ConvertToInt32(numberSourceBits);
+                if ((shiftedIn & mask) != 0)
+                {
+                    numberSource |= mask;
+                }
+                else
+                {
+                    numberSource &= ~mask;
+                }
+            }
+            
+            return numberSource;
         }
 
-        private static void ThrowIfInvalidParameters(int i, int j, int LENGTH)
+        /// <summary>
+        /// Checks if passed parameters are valid. 
+        /// If they are not valid throws exceptions.
+        /// </summary>
+        /// <param name="i">
+        /// Lower bound of bit range that will be copied.
+        /// </param>
+        /// <param name="j">
+        /// Higher bound of bit range that will be copied.
+        /// </param>
+        /// <exception cref="ArgumentOutOfRangeException">
+        /// Thrown in three cases: i > j, j > sizeof(int) * 8, i \lt 0.
+        /// </exception>
+        private static void ThrowForInvalidParameters(int i, int j)
         {
             if (i > j)
             {
                 throw new ArgumentOutOfRangeException($"{nameof(i)} must be less than {nameof(j)}.");
             }
 
-            if (j > LENGTH)
+            int bitsInByte = 8;
+            if (j > sizeof(int) * bitsInByte)
             {
-                throw new ArgumentOutOfRangeException(nameof(j), "j is bigger than length of Int32 bit representation.");
+                throw new ArgumentOutOfRangeException(nameof(j), $"{nameof(j)} is bigger than length of Int32 bit representation.");
+            }
+
+            if (i < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(i), $"{nameof(i)} can not be less than 0.");
             }
         }
-
-        /// <summary>
-        /// Converts number to char array that is a bit representation of it. 
-        /// Most significant digits are in the left.
-        /// </summary>
-        /// <param name="number">
-        /// Number to convert.
-        /// </param>
-        /// <returns>
-        /// The <see cref="char[]"/>.
-        /// Number bit representation as char array.
-        /// </returns>
-        private static char[] ToBitsArray(int number, int length)
-        {
-            // ToString method doesn't return most significant zeros, 
-            // so we need to add them manually with String's PadLeft method.
-            return Convert.ToString(number, 2).PadLeft(length, '0').ToCharArray();
-        }
-
-        /// <summary>
-        /// Converts number to a string that is a bit representation of it. 
-        /// Most significant digits are in the left.
-        /// </summary>
-        /// <param name="number">
-        /// Number to convert.
-        /// </param>
-        /// <returns>
-        /// The <see cref="string"/>.
-        /// Number bit representation as string.
-        /// </returns>
-        private static string ToBitsString(int number, int length) => new string(ToBitsArray(number, length));
-
-        /// <summary>
-        /// Converts bit representation of number as char array to corresponding Int32 value.
-        /// </summary>
-        /// <param name="numberSourceBits">
-        /// Char array of bits.
-        /// </param>
-        /// <returns>
-        /// The <see cref="int"/>.
-        /// Integer that was converted from bits array.
-        /// </returns>
-        private static int ConvertToInt32(char[] numberSourceBits) => Convert.ToInt32(new string(numberSourceBits), 2);
     }
 }
