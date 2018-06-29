@@ -87,6 +87,11 @@
         /// </returns>
         private static bool ContainsDigit(int number, int digit)
         {
+            if (number < 0)
+            {
+                number *= -1;
+            }
+
             while (number > 0)
             {
                 if (number % 10 == digit)
