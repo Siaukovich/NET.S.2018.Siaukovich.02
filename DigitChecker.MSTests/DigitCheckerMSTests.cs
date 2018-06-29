@@ -36,10 +36,10 @@
             DigitChecker.FilterDigits(new int[0], -1);
 
         [TestMethod]
-        public void FilterDigits_OrderedArray_ReturnsValidAnswer()
+        public void FilterDigits_OrderedArrayWithNegativeNumbers_ReturnsValidAnswer()
         {
             int digit = 2;
-            int[] array = Enumerable.Range(0, 100).ToArray();
+            int[] array = Enumerable.Range(-100, 100).ToArray();
             int[] expected = array.Where(v => v.ToString().Contains(digit.ToString())).ToArray();
 
             int[] actual = DigitChecker.FilterDigits(array, digit);
@@ -51,7 +51,7 @@
         public void FilterDigits_DigitThatIsNotInTheArray_ReturnsEmptyArray()
         {
             int digit = 2;
-            int[] array = Enumerable.Range(0, 100).Where(v => !v.ToString().Contains(digit.ToString())).ToArray();
+            int[] array = Enumerable.Range(-100, 100).Where(v => !v.ToString().Contains(digit.ToString())).ToArray();
             int[] expected = new int[0];
 
             int[] actual = DigitChecker.FilterDigits(array, digit);

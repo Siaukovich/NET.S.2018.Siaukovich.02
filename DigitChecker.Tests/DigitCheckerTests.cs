@@ -10,7 +10,9 @@
     {
         [TestCase(new[] { 7, 1, 2, 3, 4, 5, 6, 7, 68, 69, 70, 15, 17 }, 5, ExpectedResult = new[] { 5, 15 })]
         [TestCase(new[] { 7, 1, 2, 3, 4, 5, 6, 7, 68, 69, 70, 15, 17 }, 6, ExpectedResult = new[] { 6, 68, 69 })]
-        [TestCase(new[] { 7, 1, 2, 3, 4, 5, 6, 7, 68, 69, 70, 15, 17 }, 7, ExpectedResult = new[] { 7, 7, 70, 17 })]
+        [TestCase(new[] { 7, 1, 2, 3, 4, 5, -6, 7, 68, 69, 70, 15, 17 }, 6, ExpectedResult = new[] { -6, 68, 69 })]
+        [TestCase(new[] { 7, 1, 2, 3, 4, 5, 6, 7, 68, 69, 70, 15, 17 }, 6, ExpectedResult = new[] { 6, 68, 69 })]
+        [TestCase(new[] { 7, 1, 2, 3, 4, 5, 6, -7, 68, 69, 70, 15, -17 }, 7, ExpectedResult = new[] { 7, -7, 70, -17 })]
         public int[] FilerDigits_ResultOnlyElementsWithPassedDigit(int[] array, int digit) =>
             DigitChecker.FilterDigits(array, digit);
 
