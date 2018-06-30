@@ -48,6 +48,28 @@
         }
 
         [TestMethod]
+        public void FilterDigits_DigitNotInArray_ReturnsEmptyArray()
+        {
+            var array = new[] { 7, 1, 2, 3, 4, 5, 6, 7, 68, 70, 15, 17 };
+            int digit = 9;
+
+            int[] result = DigitChecker.FilterDigits(array, digit);
+
+            Assert.IsTrue(result.Length == 0);
+        }
+
+        [TestMethod]
+        public void FilterDigits_EmptyArray_ReturnsEmptyArray()
+        {
+            var array = new int[0];
+            int digit = 0;
+
+            int[] result = DigitChecker.FilterDigits(array, digit);
+
+            Assert.IsTrue(result.Length == 0);
+        }
+
+        [TestMethod]
         public void FilterDigits_DigitThatIsNotInTheArray_ReturnsEmptyArray()
         {
             int digit = 2;

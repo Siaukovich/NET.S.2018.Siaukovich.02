@@ -16,16 +16,13 @@
         public int[] FilerDigits_ResultOnlyElementsWithPassedDigit(int[] array, int digit) =>
             DigitChecker.FilterDigits(array, digit);
 
-        [Test]
-        public void FilterDigits_ResultIsEmptyArray()
+        [TestCase(new[] { 7, 1, 2, 3, 4, 5, 6, 7, 68, 70, 15, 17 }, 9)]
+        [TestCase(new int[0], 9)]
+        public void FilterDigits_ReturnsEmptyArray(int[] array, int digit)
         {
-            var array = new[] { 7, 1, 2, 3, 4, 5, 6, 7, 68, 70, 15, 17 };
-            int digit = 9;
-            var expectedResult = new int[0];
+            int[] result = DigitChecker.FilterDigits(array, digit);
 
-            int[] actualResult = DigitChecker.FilterDigits(array, digit);
-
-            Assert.AreEqual(expectedResult, actualResult);
+            CollectionAssert.IsEmpty(result);
         }
 
         [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.GetData))]
@@ -39,7 +36,7 @@
 
         [Test]
         public void FilterDigits_DigitIsOutOfRange_ThrowsArgumentOutOfRangeException() =>
-            Assert.Throws<ArgumentOutOfRangeException>( () => DigitChecker.FilterDigits(new int[1], 10));
+            Assert.Throws<ArgumentOutOfRangeException>(() => DigitChecker.FilterDigits(new int[1], 10));
     }
 
     public class TestsData
