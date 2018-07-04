@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections;
+    using System.Diagnostics;
+    using System.Linq;
 
     using NUnit.Framework;
 
@@ -23,6 +25,26 @@
             int[] result = DigitChecker.FilterDigits(array, digit);
 
             CollectionAssert.IsEmpty(result);
+        }
+
+        [Test]
+        public void FilterDigits_AllElementsContainDigit_ReturnsEqualArray()
+        {
+            int digit = 9;
+            int bound = 100000000;
+            string strDigit = digit.ToString();
+            var array = Enumerable.Range(-bound, 2 * bound)
+                                  .Where(v => v.ToString().Contains(strDigit))
+                                  .ToArray();
+
+            var sw = new Stopwatch();
+            sw.Start();
+            int[] result = DigitChecker.FilterDigits(array, digit);
+            sw.Stop();
+
+            Console.WriteLine(sw.ElapsedMilliseconds);
+
+            CollectionAssert.AreEqual(array, result);
         }
 
         [Test, TestCaseSource(typeof(TestsData), nameof(TestsData.GetData))]
