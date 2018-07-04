@@ -1,6 +1,7 @@
 ﻿namespace DigitChecker
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Class with single method that filters passed array in the way
@@ -26,21 +27,18 @@
         {
             ThrowIfInvalidParameters(array, digit);
 
-            int swapIndex = 0;
-            for (int i = 0; i < array.Length; ++i)
+            var matchingDigits = new List<int>();
+            foreach (int number in array)
             {
-                if (!ContainsDigit(array[i], digit))
+                if (ContainsDigit(number, digit))
                 {
-                    continue;
+                    matchingDigits.Add(number);
                 }
-
-                Swap(ref array[swapIndex], ref array[i]);
-                swapIndex++;
             }
 
-            Array.Resize(ref array, swapIndex);
+            int[] answer = ToArray(matchingDigits);
 
-            return array;
+            return answer;
         }
 
         /// <summary>
@@ -106,19 +104,23 @@
         }
 
         /// <summary>
-        /// Swaps values of two passed elements.
+        /// Converts list of ints to array of ints.
         /// </summary>
-        /// <param name="a">
-        /// First element.
+        /// <param name="list">
+        /// List to convert.
         /// </param>
-        /// <param name="b">
-        /// Second element.
-        /// </param>
-        private static void Swap(ref int a, ref int b)
+        /// <returns>
+        /// The <see cref="int[]"/>.
+        /// </returns>
+        private static int[] ToArray(List<int> list)
         {
-            int t = a;
-            a = b;
-            b = t;
+            var array = new int[list.Count];
+            for (int i = 0; i < array.Length; i++)
+            {
+                array[i] = list[i];
+            }
+
+            return array;
         }
     }
 }
